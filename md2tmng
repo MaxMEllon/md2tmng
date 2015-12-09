@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+class Tmng2md
+  def initialize
+    @file_name = ARGV[0]
+    @text = open
+  end
+
+  def help
+    puts '
+      Usage : $ md2tmng [file_name]
+    '
+  end
+
+  def convert
+    return '' if @text.nil? || @text.empty?
+    @text.split("\n").each do |line|
+      li(line)
+      h3(line)
+      h2(line)
+      h1(line)
+    end
+  end
+
+  private
+
+  def h1(line)
+    line.gsub!('# ', '■ ')
+  end
+
+  def h2(line)
+    line.gsub!('## ', '● ')
+  end
+
+  def h3(line)
+    line.gsub!('### ', '◎ ')
+  end
+
+  def li(line)
+    line.gsub!('- ', '○ ')
+  end
+
+  def open
+    @file = File.open(@file_name)
+    @file.read
+  end
+end
+
+tmng2md = Tmng2md.new
+puts tmng2md.convert
