@@ -15,38 +15,44 @@ class Tmng2md
   def convert
     return '' if @text.nil? || @text.empty?
     @text.split("\n").each do |line|
-      code(line)
-      li(line)
-      h3(line)
-      h2(line)
-      h1(line)
+      dot!(line)
+      code!(line)
+      li!(line)
+      h3!(line)
+      h2!(line)
+      h1!(line)
     end
   end
 
   private
 
-  def code(line)
+  def dot!(line)
+    line.gsub! '，', '、'
+    line.gsub! '．', '。'
+  end
+
+  def code!(line)
     line.gsub! /```[A-z]*/, ''
   end
 
-  def h1(line)
-    line.gsub!('# ', '■ ')
+  def li!(line)
+    line.gsub! '- ', '○ '
   end
 
-  def h2(line)
-    line.gsub!('## ', '● ')
+  def h1!(line)
+    line.gsub! '# ', '■ '
   end
 
-  def h3(line)
-    line.gsub!('### ', '◎ ')
+  def h2!(line)
+    line.gsub! '## ', '● '
   end
 
-  def li(line)
-    line.gsub!('- ', '○ ')
+  def h3!(line)
+    line.gsub! '### ', '◎ '
   end
 
   def open
-    @file = File.open(@file_name)
+    @file = File.open @file_name
     @file.read
   end
 end
