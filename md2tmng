@@ -18,6 +18,7 @@ class Tmng2md
       dot!(line)
       code!(line)
       li!(line)
+      h4!(line)
       h3!(line)
       h2!(line)
       h1!(line)
@@ -27,8 +28,8 @@ class Tmng2md
   private
 
   def dot!(line)
-    line.gsub! '，', '、'
-    line.gsub! '．', '。'
+    line.tr! '，', '、'
+    line.tr! '．', '。'
   end
 
   def code!(line)
@@ -37,6 +38,7 @@ class Tmng2md
 
   def li!(line)
     line.gsub! '- ', '○ '
+    line.gsub! '* ', '○ '
   end
 
   def h1!(line)
@@ -49,6 +51,10 @@ class Tmng2md
 
   def h3!(line)
     line.gsub! '### ', '◎ '
+  end
+
+  def h4!(line)
+    line.gsub! '#### ', '◎ '
   end
 
   def open
